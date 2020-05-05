@@ -27,6 +27,11 @@ const playerSchema = new mongoose.Schema({
   goals: {
     type: Number,
   },
+  status: {
+    type: String,
+    enum: ["Available", "Injured", "Suspended", "Retired"],
+    required: "You must supply a status.",
+  },
   dob: {
     type: Date,
     required: "You must enter a date of birth!",
