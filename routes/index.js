@@ -31,6 +31,17 @@ router.post("/teams", authController.isAuthorized, teamController.create);
 router.get("/teams", authController.isAuthorized, teamController.getAll);
 
 // Player routes
-router.post("players", authController.isAuthorized, playerController.create);
+router.post("/players", authController.isAuthorized, playerController.create);
+router.get("/players", authController.isAuthorized, playerController.getAll);
+router.put(
+  "/players/:id",
+  authController.isAuthorized,
+  playerController.updateOne
+);
+router.delete(
+  "/players/:id",
+  authController.isAuthorized,
+  playerController.delete
+);
 
 module.exports = router;

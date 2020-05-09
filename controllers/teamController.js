@@ -17,7 +17,6 @@ exports.create = (req, res) => {
 
 exports.getAll = (req, res) => {
   Team.find().then((teams) => {
-    console.log(teams);
     res.status(200).json(teams);
   });
 };

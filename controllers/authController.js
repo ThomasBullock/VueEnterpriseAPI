@@ -96,26 +96,19 @@ exports.register = (req, res) => {
 
 exports.isAuthorized = (req, res, next) => {
   const token = req.header("Authorization").replace("Bearer ", "");
-  console.log(">>> token");
-  console.log(token);
   try {
     const data = jwt.verify(token, secret);
-    console.log(">>> data");
-    console.log(data);
     User.findOne({ _id: data.id })
       .then((user) => {
         if (!user) {
           throw new Error();
         }
-        console.log(">>>> findOne result");
-        console.log(user);
         req.user = user;
         req.token = token;
         next();
       })
       .catch((err) => {
-        console.log(">>> error");
-        console.log(error);
+        console.log(err);
         res
           .status(401)
           .send({ error: "Not authorized to access this resource" });
@@ -126,7 +119,4 @@ exports.isAuthorized = (req, res, next) => {
     console.log(err);
     res.status(401).send({ error: "Not authorized to access this resource" });
   }
-
-  // } catch (error) {
-  // }
 };

@@ -32,14 +32,25 @@ const playerSchema = new mongoose.Schema({
     enum: ["Available", "Injured", "Suspended", "Retired"],
     required: "You must supply a status.",
   },
+  position: {
+    type: String,
+    enum: ["Forward", "Midfielder", "Defender", "Ruck", "Utility"],
+    required: "You must supply a position.",
+  },
   dob: {
     type: Date,
     required: "You must enter a date of birth!",
   },
-  teamID: {
+  teamId: {
     type: mongoose.Schema.ObjectId,
     ref: "Team",
     required: "You must supply a teamID",
+  },
+  imgUrl: {
+    type: String,
+  },
+  imgPublicId: {
+    type: String,
   },
 });
 
