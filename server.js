@@ -3,12 +3,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-// const users = require("./routes");
-// const teams = require("./routes/api/teams");
-// const dashboard = require("./routes/api/dashboard");
-const routes = require("./routes");
+
+const auth = require("./routes/auth-routes");
+const api = require("./routes/api-routes");
 
 const app = express();
+
 // Bodyparser middleware
 app.use(
   bodyParser.urlencoded({
@@ -34,9 +34,8 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 // Routes
-// app.use("/api/users", users);
-// app.use("/api/teams", teams);
-app.use("/api", routes);
+app.use("/auth", auth);
+app.use("/api", api);
 
 const port = process.env.PORT || 3000;
 

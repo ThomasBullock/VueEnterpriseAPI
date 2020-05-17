@@ -4,17 +4,30 @@ const authController = require("../controllers/authController");
 const teamController = require("../controllers/teamController");
 const playerController = require("../controllers/playerController");
 const Team = require("../models/Team");
-// const auth = require("../middleware/auth");
 
-// @route POST api/users/register
-// @desc Register user
-// @access Public
-router.post("/register", authController.register);
+// // @route POST api/users/register
+// // @desc Register user
+// // @access Public
+// router.post("/register", authController.register);
 
-// @route POST api/users/login
-// @desc Login user and return JWT token
-// @access Public
-router.post("/login", authController.login);
+// // @route POST api/users/login
+// // @desc Login user and return JWT token
+// // @access Public
+// router.post("/login", authController.login);
+
+// // auth with google+ (when we say google it knows we are referring to the GoogleStrategy we added to passport in passport-setup.js)
+// router.get(
+//   "/google",
+//   passport.authenticate("google", {
+//     scope: ["profile"],
+//   })
+// );
+
+// // callback route for google - this time we have a code so we aren't sent to th consent screen as we are on /google
+// router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
+//   console.log(req.query);
+//   res.send("you reached callback");
+// });
 
 //
 router.get("/dashboard", authController.isAuthorized, (req, res) => {

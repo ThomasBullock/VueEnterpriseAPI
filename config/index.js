@@ -8,6 +8,10 @@ const config = {
   //   useMongoClient: true
   // }
   secret: process.env.SECRET,
+  google: {
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_SECRET,
+  },
 };
 
 module.exports = config;
