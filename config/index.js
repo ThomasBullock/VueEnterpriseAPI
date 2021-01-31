@@ -9,4 +9,5 @@ const config = {
   },
 };
 
+console.log(process.env.DB_USER);
 module.exports = config;

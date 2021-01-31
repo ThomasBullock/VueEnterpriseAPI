@@ -41,6 +41,7 @@ exports.login = (req, res) => {
             expiresIn: 86400, // 1 day in seconds
           },
           (err, token) => {
+            console.log("Successful Login");
             res.json({
               id: user._id,
               name: user.name,

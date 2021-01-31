@@ -6,6 +6,7 @@ const passport = require("passport");
 
 const auth = require("./routes/auth-routes");
 const api = require("./routes/api-routes");
+const scraper = require("./routes/scraper-routes");
 
 const app = express();
 
@@ -36,6 +37,7 @@ require("./config/passport")(passport);
 // Routes
 app.use("/auth", auth);
 app.use("/api", api);
+app.use("/scraper", scraper);
 
 const port = process.env.PORT || 3000;
 
