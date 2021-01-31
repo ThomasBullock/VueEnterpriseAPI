@@ -20,6 +20,9 @@ const playerSchema = new mongoose.Schema({
     type: Number,
     // required: 'Please enter a player height'
   },
+  weight: {
+    type: Number,
+  },
   games: {
     type: Number,
     // required: 'Please enter a player number!'
