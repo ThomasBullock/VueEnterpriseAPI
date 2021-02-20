@@ -1,20 +1,27 @@
 const Player = require("../models/Player");
 
 exports.create = (req, res) => {
+  console.log("player create");
   console.log(req.body);
-  const newPlayer = new Player({
-    ...req.body,
-  });
 
-  newPlayer
-    .save()
-    .then((player) => {
-      console.log(player);
-      res.json({
-        player,
-      });
-    })
-    .catch((err) => console.log(err));
+  // when using scraper we'll iterate thru an array of players otherwise just use body
+  const players = req.body.players ? req.body.players : [req.body];
+
+  players.forEach((player) => {
+    const newPlayer = new Player({
+      ...player,
+    });
+
+    newPlayer
+      .save()
+      .then((player) => {
+        console.log(player);
+        res.json({
+          player,
+        });
+      })
+      .catch((err) => console.log(err));
+  });
 };
 
 exports.getAll = (req, res) => {

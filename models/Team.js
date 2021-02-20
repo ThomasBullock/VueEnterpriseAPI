@@ -6,6 +6,10 @@ const teamSchema = new mongoose.Schema({
     trim: true,
     required: true,
   },
+  slug: {
+    type: String,
+    required: true,
+  },
   founded: {
     type: Number,
     required: true,
@@ -13,6 +17,12 @@ const teamSchema = new mongoose.Schema({
   logo: {
     type: String,
   },
+  premierships: [Number],
+  captainID: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Player",
+  },
+  colours: [String],
 });
 
 module.exports = Team = mongoose.model("Team", teamSchema);

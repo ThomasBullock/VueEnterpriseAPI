@@ -37,7 +37,7 @@ const playerSchema = new mongoose.Schema({
   },
   position: {
     type: String,
-    enum: ["Forward", "Midfielder", "Defender", "Ruck", "Utility"],
+    enum: ["Forward", "Midfield", "Defender", "Ruck", "Utility"],
     required: "You must supply a position.",
   },
   dob: {

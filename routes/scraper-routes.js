@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
+const playerController = require("../controllers/playerController");
 const rp = require("request-promise");
 const $ = require("cheerio");
 const baseUrl = "https://www.footywire.com/afl/footy/"; //"https://www.saints.com.au/";
@@ -20,35 +21,30 @@ const columns = [
 router.get(
   "/scrape-footywire/:team",
   authController.isAuthorized,
-  (req, res) => {
+  (req, res, next) => {
     console.log("/scrape-footywire/" + req.params.team);
     // res.send('GET')
-
+    console.log(req.body);
+    const teamId = req.query.team_id;
     rp(baseUrl + req.params.team).then(function (html) {
-      //   console.log(html);
       const data = Array.from($("td.data", "div.datadiv", html));
-
       const numberCols = $("td:first-child.data", "div.datadiv", html);
 
-      console.log(numberCols);
+      // console.log(numberCols);
 
       const rows = [];
       for (let i = 0; i < data.length - 1; i++) {
         // why we doing this see numberCols = should this be a proper array??
         if (numberCols[i]) {
           const number = numberCols[i].firstChild.data;
-          console.log(numberCols[i].firstChild.data);
-
           const index = data.findIndex(
             (item) => item.firstChild.data === number
           );
           rows.push(index);
-        } else {
-          console.log("else " + i);
         }
       }
 
-      const players = [];
+      const playersData = [];
 
       rows.forEach((i) => {
         const player = {};
@@ -63,24 +59,33 @@ router.get(
           }
         }
 
-        players.push(player);
+        playersData.push(player);
       });
 
-      //   const playersForCreate = players.map((player) => {
-      //     console.log(player);
-      //     return {
-      //       name: player.name.split(",")[1].trim(),
-      //       //   surname: player.name.split(",")[0],
-      //       //   games: player.games,
-      //       //   height: player.height.split("c")[0],
-      //       //   weight: player.weight.split("k")[0],
-      //     };
-      //   });
-      res.status(200).json({
-        players,
-      });
+      const players = playersData
+        .filter((player) => player.name)
+        .map((player) => {
+          return {
+            name: player.name.split(",")[1].trim(),
+            surname: player.name.split(",")[0],
+            dob: new Date(player.dob),
+            games: player.games,
+            number: player.number,
+            height: player.height.split("c")[0],
+            weight: player.weight.split("k")[0],
+            position: player.position.trim(),
+            teamId: teamId,
+            status: "Available",
+          };
+        });
+      req.body = { players };
+      // res.status(200).json({
+      //   players,
+      // });
+      next();
     });
-  }
+  },
+  playerController.create
 );
 
 module.exports = router;

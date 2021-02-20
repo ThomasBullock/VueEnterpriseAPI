@@ -44,6 +44,7 @@ router.get("/dashboard", authController.isAuthorized, (req, res) => {
 // Teams routes
 router.post("/teams", authController.isAuthorized, teamController.create);
 router.get("/teams", authController.isAuthorized, teamController.getAll);
+router.put("/teams/:id", authController.isAuthorized, teamController.updateOne);
 
 // Player routes
 router.post("/players", authController.isAuthorized, playerController.create);
